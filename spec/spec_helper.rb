@@ -28,3 +28,8 @@ end
 puts "Starting redis for testing at localhost:9736..."
 `redis-server #{dir}/redis-test.conf`
 Resque.redis = 'localhost:9736'
+
+require "#{dir}/support/extensions.rb"
+
+class SomeJob
+end
