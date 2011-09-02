@@ -5,10 +5,9 @@ require 'bundler'
 Bundler.setup
 Bundler.require
 
-# these are necessary because of
+# this is necessary because of
 # https://github.com/carlhuda/bundler/issues/1096
 require 'resque'
-require 'uuidtools'
 
 # make sure we can run redis
 if !system("which redis-server")
