@@ -21,7 +21,7 @@ describe Resque::Delayed do
     end
   end
 
-  describe 'availability' do
+  describe :availability do
     before :each do
       Resque::Delayed.clear
       @one_day_from_now = Time.now + 1.day
@@ -42,8 +42,8 @@ describe Resque::Delayed do
     end
   end
 
-  describe 'dequeueing' do
-    before :each do
+  describe :dequeueing do
+    before do
       Resque::Delayed.clear
       @one_hour_ago = Time.now - 1.hour
       Resque::Delayed.create_at(@one_hour_ago, SomeJob, 'foo', 'bar', 1234)
@@ -53,6 +53,37 @@ describe Resque::Delayed do
       job = Resque::Delayed.next
       job.should == ["SomeJob", "foo", "bar", 1234]
       Resque::Delayed.count.should be_zero
+    end
+  end
+
+  describe :updates do
+    before :each do
+      Resque::Delayed.clear
+      @one_hour_ago = Time.now - 1.hour
+      Resque::Delayed.create_at(@one_hour_ago, SomeJob, 'first')
+      Resque::Delayed.create_at(@one_hour_ago + 2.minutes, SomeJob, 'third')
+      Resque::Delayed.create_at(@one_hour_ago + 1.minute, SomeJob, 'second')
+    end
+
+    it "should be setup properly" do
+      Resque::Delayed.peek.should == ["SomeJob", "first"]
+      Resque::Delayed.count.should == 3
+    end
+
+    it "should dequeue in the correct order regardless of instert order" do
+      %w(first second third).each do |arg|
+        Resque::Delayed.next.last.should == arg
+      end
+    end
+
+    it "should allow queueing multiple instances of the same job" do
+      Resque::Delayed.create_at(@one_hour_ago + 3.minutes, SomeJob, 'first')
+      Resque::Delayed.count.should == 4
+    end
+
+    it "should not alter position of existing jobs on second instance queue" do
+      Resque::Delayed.create_at(@one_hour_ago + 3.minutes, SomeJob, 'first')
+      Resque::Delayed.peek.should == ["SomeJob", "first"]
     end
   end
 end
