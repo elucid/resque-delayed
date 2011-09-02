@@ -1,5 +1,3 @@
-require "resque-delayed/version"
-
 module Resque
   module Delayed
     class << self
