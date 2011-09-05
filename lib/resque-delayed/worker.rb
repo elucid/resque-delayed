@@ -27,8 +27,8 @@ module Resque::Delayed
         # harvest delayed jobs while they are available
         while job = Resque::Delayed.next do
           log "got: #{job.inspect}"
-          payload_class_name, *args = job
-          Resque::Job.create(:jobs, payload_class_name, *args)
+          queue, klass, *args = job
+          Resque::Job.create(queue, klass, *args)
         end
 
         break if interval.zero?

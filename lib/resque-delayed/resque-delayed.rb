@@ -14,16 +14,20 @@ module Resque
       end
 
       def create_at(time, *args)
-        job_class, rest = *args
-        Resque.redis.zadd :delayed, time.to_i, encode(*args)
+        klass, *args = args
+        queue = Resque.queue_from_class klass
+        # validate here so that the Resque::Delayed worker doesn't have
+        # to worry about it before enqueueing
+        Resque.validate(klass, queue)
+        Resque.redis.zadd :delayed, time.to_i, encode(queue, klass, *args)
       end
 
       def create_in(offset, *args)
         create_at Time.now + offset, *args
       end
 
-      def encode(job_class, *args)
-        "#{random_uuid}|#{Resque.encode([job_class.to_s, *args])}"
+      def encode(queue, klass, *args)
+        "#{random_uuid}|#{Resque.encode([queue, klass.to_s, *args])}"
       end
 
       def decode(encoded_job)

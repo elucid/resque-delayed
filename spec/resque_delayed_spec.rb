@@ -51,7 +51,7 @@ describe Resque::Delayed do
 
     it "should deserialize properly" do
       job = Resque::Delayed.next
-      job.should == ["SomeJob", "foo", "bar", 1234]
+      job.should == ["jobs", "SomeJob", "foo", "bar", 1234]
       Resque::Delayed.count.should be_zero
     end
   end
@@ -66,7 +66,7 @@ describe Resque::Delayed do
     end
 
     it "should be setup properly" do
-      Resque::Delayed.peek.should == ["SomeJob", "first"]
+      Resque::Delayed.peek.should == ["jobs", "SomeJob", "first"]
       Resque::Delayed.count.should == 3
     end
 
@@ -83,7 +83,7 @@ describe Resque::Delayed do
 
     it "should not alter position of existing jobs on second instance queue" do
       Resque::Delayed.create_at(@one_hour_ago + 3.minutes, SomeJob, 'first')
-      Resque::Delayed.peek.should == ["SomeJob", "first"]
+      Resque::Delayed.peek.should == ["jobs", "SomeJob", "first"]
     end
   end
 end

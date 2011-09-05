@@ -29,14 +29,16 @@ describe Resque::Delayed::Worker do
       Resque::Delayed.clear
       @worker = Resque::Delayed::Worker.new
       Resque.enqueue_at(Time.now - 1.hour, SomeJob, 'past')
+      Resque.enqueue_at(Time.now - 1.hour, SomeOtherJob, 'past')
     end
 
     after do
       @worker.shutdown!
     end
 
-    it "should queue delayed job in appropriate Resque queue after harvest" do
+    it "should queue delayed jobs in appropriate Resque queues after harvest" do
       Resque::Job.should_receive(:create).with('jobs', 'SomeJob', 'past')
+      Resque::Job.should_receive(:create).with('other_jobs', 'SomeOtherJob', 'past')
       @worker.work(0)
     end
   end

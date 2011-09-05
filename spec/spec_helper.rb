@@ -33,4 +33,9 @@ Resque.redis = 'localhost:9736'
 require "#{dir}/support/extensions.rb"
 
 class SomeJob
+  @queue = :jobs
+end
+
+class SomeOtherJob
+  @queue = :other_jobs
 end
