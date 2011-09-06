@@ -1,16 +1,18 @@
 module Resque
   module Delayed
     class << self
+      @queue = "Resque::Delayed:internal"
+
       def random_uuid
         UUIDTools::UUID.random_create.to_s.gsub('-', '')
       end
 
       def clear
-        Resque.redis.del :delayed
+        Resque.redis.del @queue
       end
 
       def count
-        Resque.redis.zcard :delayed
+        Resque.redis.zcard @queue
       end
 
       def create_at(time, *args)
@@ -19,7 +21,7 @@ module Resque
         # validate here so that the Resque::Delayed worker doesn't have
         # to worry about it before enqueueing
         Resque.validate(klass, queue)
-        Resque.redis.zadd :delayed, time.to_i, encode(queue, klass, *args)
+        Resque.redis.zadd @queue, time.to_i, encode(queue, klass, *args)
       end
 
       def create_in(offset, *args)
@@ -44,7 +46,7 @@ module Resque
         # it is possible that another process will pull this job out of the
         # queue before this process has a chance. if that happens, return nil
         # so that we don't end up duplicating the job.
-        return unless job and Resque.redis.zrem(:delayed, job)
+        return unless job and Resque.redis.zrem(@queue, job)
 
         Resque::Delayed.decode job
       end
@@ -60,7 +62,7 @@ module Resque
 
       def peek_at_serialized(time)
         Resque.redis.
-          zrangebyscore(:delayed, '-inf', time.to_i, :limit => [0, 1]).first
+          zrangebyscore(@queue, '-inf', time.to_i, :limit => [0, 1]).first
       end
     end
   end
