@@ -1,8 +1,8 @@
 module Resque
   module Delayed
-    class << self
-      @queue = "Resque::Delayed:internal"
+    @queue = "Resque::Delayed:internal"
 
+    class << self
       def random_uuid
         UUIDTools::UUID.random_create.to_s.gsub('-', '')
       end
