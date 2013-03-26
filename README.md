@@ -78,7 +78,7 @@ to your Gemfile and run
 
 Resque::Delayed piggybacks on your existing Resque setup so it will use whatever Redis instance Resque has been configured to use.
 
-The above will provide `Resque.enqueue_in` and `Resque.enqueue_at` to your application but you will also need to run a Resque::Dealyed worker process. The worker is responsible for harvesting future-queued jobs and pushing them onto the appropriate Resque queues at the right time.
+The above will provide `Resque.enqueue_in` and `Resque.enqueue_at` to your application but you will also need to run a Resque::Delayed worker process. The worker is responsible for harvesting future-queued jobs and pushing them onto the appropriate Resque queues at the right time.
 
 `Resque::Delayed::Worker` is a stripped-down version of `Resque::Worker` so you can use the same configuration options like `INTERVAL`, `PIDFILE`, `LOGGING`, `VERBOSE` and `VVERBOSE`
 
