@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rspec", "~> 2.6.0"
   gem.add_development_dependency "rake", [">= 0.8.7", "< 1.0"]
 
-  gem.add_dependency "redis", "~> 2.2.0"
-  gem.add_dependency "resque", [">= 1.18.0", "< 1.20.0"]
+  gem.add_dependency "redis", ">= 2.2.0"
+  gem.add_dependency "resque", ">= 1.18.0"
   gem.add_dependency "uuidtools", "~> 2.1.2"
 end
