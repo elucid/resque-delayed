@@ -1,3 +1,7 @@
+## 1.2.0 (2013-07-30)
+
+* relax Resque and Redis dependencies to allow wider range of installs
+
 ## 1.1.0 (2011-09-23)
 
 * well, this is embarrasing. originally added `@queue` instance variable to
