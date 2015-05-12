@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["justin.giancola@gmail.com"]
   gem.summary       = %q{Delayed job queueing for Resque}
   gem.description   = %q{Enqueue jobs that will only appear for processing after a specified delay or at a particular time in the future}
-  gem.homepage      = "https://github.com/elucid/resque-delayed"
+  gem.homepage      = "https://github.com/elucid/resque-delayed#readme"
 
   gem.executables   = `git ls-files -- bin/*`.split($/).map { |f| File.basename(f) }
   gem.files         = `git ls-files`.split($/)
