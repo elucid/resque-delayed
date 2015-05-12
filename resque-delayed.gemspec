@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Resque::Delayed::VERSION
 
-  gem.add_development_dependency "bundler", [">= 1.0.2", "< 1.2.0"]
+  gem.add_development_dependency "bundler", ["~> 1.0", ">= 1.0.2"]
   gem.add_development_dependency "rspec", "~> 2.6.0"
   gem.add_development_dependency "rake"
 
