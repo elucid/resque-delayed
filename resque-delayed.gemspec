@@ -1,4 +1,7 @@
-require File.expand_path('../lib/resque-delayed/version', __FILE__)
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'resque-delayed/version'
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Justin Giancola"]
@@ -7,9 +10,9 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Enqueue jobs that will only appear for processing after a specified delay or at a particular time in the future}
   gem.homepage      = "https://github.com/elucid/resque-delayed"
 
-  gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  gem.files         = `git ls-files`.split("\n")
-  gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  gem.executables   = `git ls-files -- bin/*`.split($/).map { |f| File.basename(f) }
+  gem.files         = `git ls-files`.split($/)
+  gem.test_files    = `git ls-files -- {test,spec,features}/*`.split($/)
   gem.name          = "resque-delayed"
   gem.require_paths = ["lib"]
   gem.version       = Resque::Delayed::VERSION
