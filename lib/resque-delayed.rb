@@ -1,6 +1,6 @@
 require 'resque'
 require 'uuidtools'
 
-%w(resque-delayed resque worker).each do |component|
-  require File.join(File.dirname(__FILE__), 'resque-delayed', component)
-end
+require 'resque-delayed/resque-delayed'
+require 'resque-delayed/resque'
+require 'resque-delayed/worker'
