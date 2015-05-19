@@ -1,3 +1,6 @@
+## 1.3.0 (2015-05-19)
+
+* relax/simplify many dependencies; don't directly depend on redis; cleanup bundler usage; update gemspec based on current template; add spec rake task; add resque/delayed file to match gem name. Thanks @postmodern!
 ## 1.2.0 (2013-07-30)
 
 * relax Resque and Redis dependencies to allow wider range of installs
