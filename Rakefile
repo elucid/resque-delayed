@@ -1,5 +1,13 @@
 #!/usr/bin/env rake
 
-$:.unshift File.dirname(__FILE__)
+begin
+  require 'bundler/setup'
+rescue LoadError => error
+  abort error.message
+end
+
 require "bundler/gem_tasks"
-require "lib/resque-delayed/tasks"
+require "resque-delayed/tasks"
+
+require "rspec/core/rake_task"
+RSpec::Core::RakeTask.new
